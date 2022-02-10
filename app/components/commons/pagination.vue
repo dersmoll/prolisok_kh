@@ -1,3 +1,4 @@
+<script src="../../config/tailwind.config.js"></script>
 <template>
   <nav class="border-t border-gray-200 px-4 mb-10 flex items-center justify-between sm:px-0">
     <div v-if="currentPage > 1" class="w-0 flex-1 flex">
