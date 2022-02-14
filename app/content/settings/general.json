@@ -1,10 +1,10 @@
 {
   "title": "Welcome",
   "titleTemplate": "| ЖК «Пролiсок»",
-  "welcomeText": "# Корисна інформація для мешканців ЖК «Пролісок»",
+  "welcomeText": "# Корисна інформація для мешканців **ЖК «Пролісок»**",
   "logo": "/images/uploads/logo.png",
   "icon": "/images/uploads/fav-logo.png",
   "loadingColor": "#0b3765",
-  "seoDescription": "A quickstart for Nuxt & Netlify CMS",
+  "seoDescription": "No need seo",
   "seoMetaImage": ""
 }
