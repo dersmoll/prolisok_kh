@@ -5,6 +5,7 @@ import { getContent } from '@/utils';
 
 export interface State {
   perPage: number;
+  perPageHome: number;
   pages: Page[];
   posts: Post[];
   route?: Route;
@@ -12,7 +13,8 @@ export interface State {
 
 // Initial State
 export const appState = {
-  perPage: 4,
+  perPageHome: 4,
+  perPage: 12,
   pages: [],
   posts: [],
 };

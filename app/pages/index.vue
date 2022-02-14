@@ -4,7 +4,7 @@
       <div class="flex flex-col w-full xl:w-3/5 justify-center lg:items-start overflow-y-hidden">
         <div v-html="$md.render(welcomeText)" class="home__welcome markdown" />
 
-        <div class="mb-12 xl:mb-0">
+<!--        <div class="mb-12 xl:mb-0">
           <h4 v-if="isSignedUp">Thank you - we'll be in touch shortly.</h4>
 
           <form
@@ -31,7 +31,7 @@
               Sign Up
             </button>
           </form>
-        </div>
+        </div>-->
       </div>
       <div class="flex flex-col w-full xl:w-2/5">
         <img
@@ -41,24 +41,78 @@
         />
       </div>
     </div>
+
+    <h2 class="text-base md:text-lg lg:text-xl xl:text-4xl">
+      Останні новини
+    </h2>
+
+    <div class="flex flex-wrap md:-mx-4 pb-20">
+      <div v-for="(post, index) in posts" :key="index" class="w-full md:w-1/4 my-4 md:px-4">
+        <div class="post">
+          <nuxt-link :to="`/blog/${post.slug}`">
+            <img
+              :alt="post.title"
+              class="w-full"
+              :src="post.featuredImage || 'https://source.unsplash.com/random/640x340'"
+            />
+            <div class="p-6 bg-white">
+              <h2 class="text-2xl mb-2">{{ post.title }} {{ post.publishedAt }}</h2>
+
+              <p class="text-base font-light">
+                {{ post.excerpt }}
+              </p>
+              <p class="text-base font-light">
+                {{ post.publishedAt }}
+              </p>
+
+              <h6 class="text-blue-600 mt-4 font-medium">Read more</h6>
+            </div>
+          </nuxt-link>
+        </div>
+      </div>
+      <Pagination v-if="totalPages > 1" :current-page="currentPage" :total-pages="totalPages" />
+    </div>
+
   </section>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator';
 import settings from '@/content/settings/general.json';
+const Pagination = () => import('@/components/commons/pagination.vue');
 
 @Component({
   // Called to know which transition to apply
   transition() {
     return 'slide-left';
   },
+  components: {
+    Pagination,
+  },
+
 })
 export default class Home extends Vue {
   welcomeText = settings.welcomeText;
 
   get posts(): Post[] {
     return this.$store.state.posts;
+  }
+
+  async asyncData({ params, store }) {
+    const page: number = params.page ? parseInt(params.page, 10) : 1;
+    const { perPageHome }: { perPageHome: number } = store.state;
+    const range = page * perPageHome;
+
+    const posts = store.state.posts.filter((post, index) => {
+      const indexPage = index + 1;
+      return range - perPageHome < indexPage && indexPage <= range;
+    });
+
+    return {
+      currentPage: page,
+      totalPages: Math.ceil(store.state.posts.length / perPageHome),
+      posts: posts || [],
+    };
   }
 
   isSignedUp = false;
