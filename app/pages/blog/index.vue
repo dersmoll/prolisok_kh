@@ -16,17 +16,15 @@
               class="w-full"
               :src="post.featuredImage || 'https://source.unsplash.com/random/640x340'"
             />
-            <div class="p-6 bg-white">
-              <h2 class="text-2xl mb-2">{{ post.title }} {{ post.publishedAt }}</h2>
-
-              <p class="text-base font-light">
-                {{ post.excerpt }}
-              </p>
-              <p class="text-base font-light">
-                {{ post.publishedAt }}
-              </p>
-
-              <h6 class="text-blue-600 mt-4 font-medium">Read more</h6>
+            <p class="text-base post-date">
+              {{ post.publishedAt }}
+            </p>
+            <div class="p-4 bg-white">
+              <h2 class="text-1xl mb-2 post-title">{{ post.title }}</h2>
+                <p class="text-base font-light">
+                  {{ post.excerpt }}
+                </p>
+              <h6 class="text-blue-600 mt-4 font-medium">Детальніше</h6>
             </div>
           </nuxt-link>
         </div>
@@ -91,8 +89,21 @@ export default class BlogIndex extends Vue {
   .post {
     @apply shadow-md;
     transition: all 0.2s cubic-bezier(0.64, 0, 0.35, 1);
+    overflow: hidden;
+    &-date {
+      padding: 10px 1rem 0;
+    }
+    &-title {
+      font-weight: 600;
+    }
+    img {
+      transition: all .6s;
+    }
     &:hover {
       @apply shadow-xl;
+      img {
+        transform: scale(1.05);
+      }
     }
   }
 }

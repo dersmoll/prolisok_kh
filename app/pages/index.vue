@@ -1,7 +1,7 @@
 <template>
   <section class="home">
-    <div class="py-24 md:py-36 mx-auto flex flex-wrap flex-col md:flex-row items-center">
-      <div class="flex flex-col w-full xl:w-3/5 justify-center lg:items-start overflow-y-hidden">
+    <div class="pt-6 pb-6 md:py-36 mx-auto flex flex-wrap flex-col md:flex-row items-center">
+      <div class="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden">
         <div v-html="$md.render(welcomeText)" class="home__welcome markdown" />
 
 <!--        <div class="mb-12 xl:mb-0">
@@ -33,7 +33,7 @@
           </form>
         </div>-->
       </div>
-      <div class="flex flex-col w-full xl:w-2/5">
+      <div class="flex flex-col w-full xl:w-3/5">
         <img
           alt="Hero"
           class="rounded shadow-xl"
@@ -46,7 +46,7 @@
       Останні новини
     </h2>
 
-    <div class="flex flex-wrap md:-mx-4 pb-20">
+    <div class="flex flex-wrap md:-mx-4 pb-20 blog">
       <div v-for="(post, index) in posts" :key="index" class="w-full md:w-1/4 my-4 md:px-4">
         <div class="post">
           <nuxt-link :to="`/blog/${post.slug}`">
@@ -55,22 +55,24 @@
               class="w-full"
               :src="post.featuredImage || 'https://source.unsplash.com/random/640x340'"
             />
-            <div class="p-6 bg-white">
-              <h2 class="text-2xl mb-2">{{ post.title }} {{ post.publishedAt }}</h2>
+            <p class="text-base post-date">
+              {{ post.publishedAt }}
+            </p>
+            <div class="p-4 bg-white">
+              <h2 class="text-1xl mb-2 post-title">{{ post.title }}</h2>
+<!--
 
               <p class="text-base font-light">
                 {{ post.excerpt }}
               </p>
-              <p class="text-base font-light">
-                {{ post.publishedAt }}
-              </p>
+-->
 
-              <h6 class="text-blue-600 mt-4 font-medium">Read more</h6>
+              <h6 class="text-blue-600 mt-4 font-medium">Детальніше</h6>
             </div>
           </nuxt-link>
         </div>
       </div>
-      <Pagination v-if="totalPages > 1" :current-page="currentPage" :total-pages="totalPages" />
+
     </div>
 
   </section>
@@ -94,9 +96,12 @@ const Pagination = () => import('@/components/commons/pagination.vue');
 export default class Home extends Vue {
   welcomeText = settings.welcomeText;
 
-  get posts(): Post[] {
+/*  get posts(): Post[] {
     return this.$store.state.posts;
-  }
+  }*/
+  currentPage!: number;
+  totalPages!: number;
+  posts: Post[] = [];
 
   async asyncData({ params, store }) {
     const page: number = params.page ? parseInt(params.page, 10) : 1;
@@ -153,3 +158,29 @@ export default class Home extends Vue {
   }
 }
 </script>
+
+
+<style lang="scss">
+.blog {
+  .post {
+    @apply shadow-md;
+    transition: all 0.2s cubic-bezier(0.64, 0, 0.35, 1);
+    overflow: hidden;
+    &-date {
+      padding: 10px 1rem 0;
+    }
+    &-title {
+      font-weight: 600;
+    }
+    img {
+      transition: all .6s;
+    }
+    &:hover {
+      @apply shadow-xl;
+      img {
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+</style>
