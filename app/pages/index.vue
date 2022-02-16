@@ -2,7 +2,7 @@
   <section class="home">
     <div class="pt-6 pb-6 md:py-36 mx-auto flex flex-wrap flex-col md:flex-row items-center">
       <div class="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden">
-        <div v-html="$md.render(welcomeText)" class="home__welcome markdown" />
+        <div v-html="$md.render(welcomeText)" class="home__welcome markdown or-" />
 
 <!--        <div class="mb-12 xl:mb-0">
           <h4 v-if="isSignedUp">Thank you - we'll be in touch shortly.</h4>
@@ -33,7 +33,7 @@
           </form>
         </div>-->
       </div>
-      <div class="flex flex-col w-full xl:w-3/5">
+      <div class="flex flex-col w-full xl:w-3/5 xl:pl-6">
         <img
           alt="Hero"
           class="rounded shadow-xl"
@@ -42,11 +42,15 @@
       </div>
     </div>
 
-    <h2 class="text-base md:text-lg lg:text-xl xl:text-4xl">
-      Останні новини
+    <h2 class="text-base md:text-lg lg:text-xl xl:text-4xl latest-news__title">
+      <span>Останні новини</span>
+
+      <nuxt-link to="/blog" class="btn-primary">
+        Більше новин
+      </nuxt-link>
     </h2>
 
-    <div class="flex flex-wrap md:-mx-4 pb-20 blog">
+    <div class="flex flex-wrap md:-mx-4 pb-20 blog latest-news__grid">
       <div v-for="(post, index) in posts" :key="index" class="w-full md:w-1/4 my-4 md:px-4">
         <div class="post">
           <nuxt-link :to="`/blog/${post.slug}`">
@@ -182,5 +186,27 @@ export default class Home extends Vue {
       }
     }
   }
+}
+.home__welcome {
+  strong {
+    margin-top: 10px;
+    padding: 0 10px;
+    display: inline-block;
+    background-color: var(--brand-dark);
+    color: #fff;
+  }
+}
+.latest-news__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 5vmin;
+  margin-bottom: .5em;
+/*  > span {
+    padding: 0 10px;
+    display: inline-block;
+    background-color: var(--brand-dark);
+    color: #fff;
+  }*/
 }
 </style>
