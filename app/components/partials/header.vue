@@ -67,4 +67,22 @@ export default class Header extends Vue {
     max-width: 180px;
   }
 }
+@media (max-width: 600px) {
+  .site-header {
+    flex-direction: column;
+    text-align: center;
+    font-size: 14px;
+    .nav {
+      margin-top: 10px;
+      width: 100%;
+      ul {
+        justify-content: space-between;
+      }
+    }
+    .block {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+}
 </style>
